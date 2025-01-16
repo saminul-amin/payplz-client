@@ -3,13 +3,14 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
   return (
-    <div className="mt-16 pb-4 text-center bg-base-300 rounded-t-2xl">
-      <h2 className="pt-8 text-3xl font-bold">PayPlz</h2>
+    <div className="mt-16 pb-4 text-center bg-base-100 rounded-t-2xl">
+      <hr className="my-5 w-6/12 mx-auto" />
+      <h2 className="pt-4 text-3xl font-bold">PayPlz</h2>
       <p className="text-gray-500 mx-3 md:mx-0 my-6 font-semibold text-lg">
         Complete tasks, earn rewards, and empower your journey <br />
         one micro-step at a time with PayPlz
       </p>
-      <hr className="my-5 w-11/12 mx-auto" />
+      {/* <hr className="my-5 w-11/12 mx-auto" /> */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-24 justify-center">
         <div>
           <h6 className="font-bold text-lg mb-4">Services</h6>
@@ -43,7 +44,7 @@ export default function Footer() {
         <FaYoutube />
         <FaInstagram />
       </div>
-      <div className="footer footer-center bg-base-300 text-base-content px-4 pt-4 pb-2">
+      <div className="footer footer-center bg-base-100 text-base-content px-4 pt-4 pb-2">
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by
