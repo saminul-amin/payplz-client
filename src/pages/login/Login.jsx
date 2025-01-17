@@ -1,15 +1,17 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 export default function Login() {
   const { user, userGoogleSignIn, userSignIn } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -20,10 +22,12 @@ export default function Login() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Your work has been saved",
+        title: "You are Logged In",
         showConfirmButton: false,
         timer: 1500,
       });
+      reset();
+      navigate("/");
     });
   };
 
@@ -33,10 +37,11 @@ export default function Login() {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Your account has been created",
+        title: "You are Logged In",
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/");
     });
   };
 
@@ -61,10 +66,10 @@ export default function Login() {
                 className="input input-bordered"
                 {...register("email", { required: true })}
               />
+              {errors.email && (
+                <span className="text-red-500">Email is required</span>
+              )}
             </div>
-            {errors.email && (
-              <span className="text-red-500">Email is required</span>
-            )}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>

@@ -158,7 +158,7 @@ export default function Register() {
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-neutral font-semibold text-lg text-white rounded-md">
-                Sign In
+                Register
               </button>
             </div>
           </form>

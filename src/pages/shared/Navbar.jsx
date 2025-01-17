@@ -1,20 +1,55 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 export default function Navbar() {
+  const { user, userLogOut } = useAuth();
+
+  const handleLogOut = () => {
+    userLogOut().then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "You are successfully Logged Out!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+  };
+
   const links = (
     <>
       <li>
         <Link to="/">Home</Link>
       </li>
-      <li>
-        <Link>New</Link>
-      </li>
+      {user && user?.email ? (
+        <>
+          <li>
+            <Link to="dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="profile">Profile</Link>
+          </li>
+          <li>
+            <button onClick={handleLogOut}>Log Out</button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
+          </li>
+        </>
+      )}
     </>
   );
 
   return (
     <div>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-200 rounded-b-xl">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -40,14 +75,16 @@ export default function Navbar() {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">PayPlz</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            PayPlz
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <Link className="btn mr-2">Login</Link>
-          <Link className="btn">Register</Link>
+          <a className="btn">Join As Developer</a>
+          {/* <Link className="btn">Register</Link> */}
         </div>
       </div>
     </div>

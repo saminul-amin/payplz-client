@@ -42,7 +42,7 @@ export default function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const UserLogOut = () => {
+  const userLogOut = () => {
     setLoading(true);
     return signOut(auth);
   };
@@ -65,8 +65,9 @@ export default function AuthProvider({ children }) {
     updateUserProfile,
     userGoogleSignIn,
     userSignIn,
-    UserLogOut,
+    userLogOut,
   };
+  
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
