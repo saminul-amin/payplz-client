@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function Register() {
-  const { createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile, userGoogleSignIn } = useAuth();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const {
@@ -52,16 +52,21 @@ export default function Register() {
   };
 
   const handleGoogleSignIn = () => {
-    userGoogleSignIn().then((result) => {
-      console.log(result.user);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Your account has been created",
-        showConfirmButton: false,
-        timer: 1500,
+    userGoogleSignIn()
+      .then((result) => {
+        console.log(result);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your account has been created",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   };
 
   return (
@@ -161,8 +166,9 @@ export default function Register() {
               <select
                 className="select select-bordered w-full"
                 {...register("role", { required: true })}
+                defaultValue="Admin"
               >
-                <option disabled selected>
+                <option disabled value="Admin">
                   What's Your Role
                 </option>
                 <option value="worker">Worker</option>

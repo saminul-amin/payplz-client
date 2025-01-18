@@ -1,16 +1,10 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 
 export default function AdminNavbar() {
   const { user } = useAuth();
-
-  const links = (
-    <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-    </>
-  );
+  const role = useRole();
 
   return (
     <div>
@@ -28,16 +22,16 @@ export default function AdminNavbar() {
           </Link>
         </div>
         <div className="navbar-end">
-          <Link to="profile">
-            <div className="flex flex-row gap-6 items-center">
-              <p className="text-lg">Coins</p>
-              <p className="text-lg">{user.displayName}</p>
-              <img
-                src={user.photoURL}
-                className="mr-4 w-12 h-12 rounded-full border-2"
-              />
-            </div>
-          </Link>
+          <div className="flex flex-row gap-6 items-center">
+            <p className="text-lg">Coins</p>
+            <p className="text-lg">
+              {user.displayName} <span className="text-base">({role})</span>
+            </p>
+            <img
+              src={user.photoURL}
+              className="mr-4 w-12 h-12 rounded-full border-2"
+            />
+          </div>
         </div>
       </div>
     </div>

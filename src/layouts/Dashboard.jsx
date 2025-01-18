@@ -9,12 +9,16 @@ import { MdDoneAll } from "react-icons/md";
 import { BsRocketTakeoff } from "react-icons/bs";
 import { ImCoinDollar } from "react-icons/im";
 import { LuHistory } from "react-icons/lu";
-import AdminNavbar from "../pages/shared/AdminNavbar";
+import AdminNavbar from "../pages/shared/DashboardNavbar";
+import useAdmin from "../hooks/useAdmin";
+import useWorker from "../hooks/useWorker";
+import useBuyer from "../hooks/useBuyer";
 
 export default function Dashboard() {
-  const isAdmin = true;
-  const isWorker = !true;
-  const isBuyer = !true;
+  const [isAdmin] = useAdmin();
+  const [isWorker] = useWorker();
+  const [isBuyer] = useBuyer();
+  console.log(isAdmin, isWorker, isBuyer);
 
   return (
     <div className="flex">
@@ -113,7 +117,7 @@ export default function Dashboard() {
         </ul>
       </div>
       <div className="flex-1">
-        {isAdmin && <AdminNavbar />}
+        <AdminNavbar />
         <div className="p-8"><Outlet /></div>
       </div>
     </div>
