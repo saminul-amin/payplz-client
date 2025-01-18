@@ -1,5 +1,5 @@
 import { FaHome } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 // Icons
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -9,11 +9,12 @@ import { MdDoneAll } from "react-icons/md";
 import { BsRocketTakeoff } from "react-icons/bs";
 import { ImCoinDollar } from "react-icons/im";
 import { LuHistory } from "react-icons/lu";
+import AdminNavbar from "../pages/shared/AdminNavbar";
 
 export default function Dashboard() {
-  const isAdmin = !true;
+  const isAdmin = true;
   const isWorker = !true;
-  const isBuyer = true;
+  const isBuyer = !true;
 
   return (
     <div className="flex">
@@ -110,6 +111,10 @@ export default function Dashboard() {
             </>
           )}
         </ul>
+      </div>
+      <div className="flex-1">
+        {isAdmin && <AdminNavbar />}
+        <div className="p-8"><Outlet /></div>
       </div>
     </div>
   );

@@ -4,6 +4,11 @@ import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
 import Register from "../pages/register/Register";
 import Dashboard from "../layouts/Dashboard";
+import AdminHome from "../pages/admin/AdminHome";
+import ManageUsers from "../pages/admin/ManageUsers";
+import ManageTasks from "../pages/admin/ManageTasks";
+import UserDashboard from "../pages/shared/UserDashboard";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -26,8 +31,34 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />
-  }
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: (
+          <PrivateRoute>
+            <UserDashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin-home",
+        element: <AdminHome />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "manage-tasks",
+        element: <ManageTasks />,
+      },
+    ],
+  },
 ]);
 
 export default router;

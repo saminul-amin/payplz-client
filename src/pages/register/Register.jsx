@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function Register() {
   const { createUser, updateUserProfile } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const {
     register,
@@ -16,21 +18,32 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     createUser(data.email, data.password).then((result) => {
       const user = result.user;
       console.log(user);
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
-          navigate("/");
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Your account has been created",
-            showConfirmButton: false,
-            timer: 1500,
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+            photo: data.photoURL,
+            role: data.role,
+          };
+          console.log(userInfo);
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              navigate("/");
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Your account has been created",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              reset();
+            }
           });
-          reset();
         })
         .catch((err) => {
           console.log(err);
