@@ -1,10 +1,8 @@
 import { useState } from "react";
-import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useRole from "../../hooks/useRole";
 
 export default function ManageUsers() {
-//   const { user } = useAuth();
   const role = useRole();
   const axiosPublic = useAxiosPublic();
   const [users, setUsers] = useState([]);

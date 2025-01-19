@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [isAdmin] = useAdmin();
   const [isWorker] = useWorker();
   const [isBuyer] = useBuyer();
-  console.log(isAdmin, isWorker, isBuyer);
+  // console.log(isAdmin, isWorker, isBuyer);
 
   return (
     <div className="flex">

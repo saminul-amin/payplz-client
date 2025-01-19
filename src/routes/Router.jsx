@@ -19,6 +19,7 @@ import AddTask from "../pages/buyer/AddTask";
 import MyTasks from "../pages/buyer/MyTasks";
 import PurchaseCoin from "../pages/buyer/PurchaseCoin";
 import PaymentHistory from "../pages/buyer/PaymentHistory";
+import UpdateTask from "../pages/buyer/UpdateTask";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "my-tasks",
         element: <MyTasks />,
+      },
+      {
+        path: "update-task",
+        element: <UpdateTask />,
       },
       {
         path: "purchase-coin",

@@ -9,7 +9,7 @@ const useWorker = () => {
     queryKey: [user?.email, "isWorker"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/users/worker/${user.email}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data?.worker;
     },
   });
