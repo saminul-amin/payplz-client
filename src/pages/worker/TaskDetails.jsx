@@ -1,8 +1,15 @@
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 export default function TaskDetails() {
+  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -10,14 +17,41 @@ export default function TaskDetails() {
     formState: { errors },
   } = useForm();
   const task = location.state.task;
-  console.log(task);
+  //   console.log(task);
 
   const onSubmit = (data) => {
     // console.log(data);
+    const details = {
+      ...task,
+      ...data,
+      taskId: task._id,
+      workerEmail: user.email,
+      name: user.displayName,
+      status: "pending",
+    };
+    const { _id, ...submissionDetails } = details;
+    // console.log(submissionDetails);
+    axiosPublic.post("/submissions", submissionDetails).then((result) => {
+      //   console.log(result.data);
+      if (result.data.insertedId) {
+        reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Submission Details has been Submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/task-list");
+      }
+    });
   };
 
   return (
     <div>
+      <Helmet>
+        <title>Task Details | PayPlz</title>
+      </Helmet>
       <h2 className="text-3xl font-semibold">Task Details</h2>
       <div className="mt-6 space-y-3">
         <h3 className="font-semibold text-2xl">Task Title: {task.title}</h3>
@@ -47,12 +81,10 @@ export default function TaskDetails() {
               <span className="label-text">Submission Description</span>
             </label>
             <textarea
-              rows={4}
-              cols={50}
               type="text"
-              {...register("title", { required: true })}
+              {...register("submissionDetails", { required: true })}
               placeholder="Enter Submission Details"
-              className="input input-bordered"
+              className="textarea textarea-bordered"
             />
             {errors.title && (
               <span className="text-red-500">

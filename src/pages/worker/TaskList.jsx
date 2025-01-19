@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -12,6 +13,7 @@ export default function TaskList() {
 
   return (
     <div>
+      <Helmet><title>Task List | PayPlz</title></Helmet>
       <h2 className="text-3xl font-semibold">Task List</h2>
       <div className="mt-6">
         <div className="overflow-x-auto w-full">
