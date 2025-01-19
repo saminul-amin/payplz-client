@@ -20,6 +20,7 @@ import MyTasks from "../pages/buyer/MyTasks";
 import PurchaseCoin from "../pages/buyer/PurchaseCoin";
 import PaymentHistory from "../pages/buyer/PaymentHistory";
 import UpdateTask from "../pages/buyer/UpdateTask";
+import TaskDetails from "../pages/worker/TaskDetails";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "task-list",
         element: <TaskList />,
+      },
+      {
+        path: "task-details",
+        element: <TaskDetails />,
       },
       // Buyer Routes
       {

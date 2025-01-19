@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
 
 export default function AddTask() {
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const {
     register,
@@ -20,7 +22,8 @@ export default function AddTask() {
     const totalPrice = reqWorkers * amountEach;
     console.log(totalPrice);
 
-    const newTask = data;
+    const newTask = { ...data, email: user.email };
+    console.log(newTask);
     axiosPublic.post("/tasks", newTask).then((result) => {
       //   console.log(result.data);
       if (result.data.insertedId) {

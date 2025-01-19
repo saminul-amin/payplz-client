@@ -51,7 +51,7 @@ export default function MyTasks() {
               <tr className="text-lg font-semibold">
                 <th>#</th>
                 <th>Task Title</th>
-                <th className="text-center">Tasks Details</th>
+                <th className="text-center">Task Details</th>
                 <th>Required Workers</th>
                 <th>Payable Amount</th>
                 <th></th>
