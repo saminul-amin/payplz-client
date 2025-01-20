@@ -42,6 +42,11 @@ export default function TaskDetails() {
           showConfirmButton: false,
           timer: 1500,
         });
+        axiosPublic
+          .post(`/tasks/decrease-worker/${submissionDetails.taskId}`)
+          .then((result) => {
+            console.log(result.data);
+          });
         navigate("/dashboard/task-list");
       }
     });
@@ -93,7 +98,17 @@ export default function TaskDetails() {
             )}
           </div>
           <div className="mt-4">
-            <button className="btn">Submit</button>
+            <button className="btn" disabled={task.workers === 0}>
+              Submit
+            </button>
+            {task.workers === 0 ? (
+              <span className="text-red-500">
+                {" "}
+                (Sorry! This Task is no longer available to submit!)
+              </span>
+            ) : (
+              <></>
+            )}
           </div>
         </form>
       </div>

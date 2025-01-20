@@ -83,7 +83,12 @@ export default function Navbar() {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Join As Developer</a>
+          <a
+            className="btn"
+            href="https://github.com/saminul-amin?tab=repositories"
+          >
+            Join As Developer
+          </a>
           {/* <Link className="btn">Register</Link> */}
         </div>
       </div>

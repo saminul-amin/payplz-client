@@ -4,12 +4,14 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function MyTasks() {
+  const { user } = useAuth();
   const [tasks, setTasks] = useState([]);
   const axiosPublic = useAxiosPublic();
 
-  axiosPublic.get("/tasks").then((res) => {
+  axiosPublic.get(`/tasks/${user.email}`).then((res) => {
     setTasks(res.data);
   });
 
@@ -67,7 +69,7 @@ export default function MyTasks() {
                   <td className="text-center">{task.workers}</td>
                   <td className="text-center">{task.payableAmount}</td>
                   <td>
-                    <div>
+                    <div className="join join-vertical">
                       <Link to="/dashboard/update-task" state={{ task: task }}>
                         <button className="btn join-item text-xl bg-base-300">
                           <CiEdit />

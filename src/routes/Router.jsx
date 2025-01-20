@@ -21,6 +21,7 @@ import PurchaseCoin from "../pages/buyer/PurchaseCoin";
 import PaymentHistory from "../pages/buyer/PaymentHistory";
 import UpdateTask from "../pages/buyer/UpdateTask";
 import TaskDetails from "../pages/worker/TaskDetails";
+import Profile from "../pages/shared/Profile";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
             <UserDashboard />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
       // Admin Routes
       {

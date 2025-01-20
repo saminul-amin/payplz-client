@@ -23,6 +23,8 @@ export default function AddTask() {
     console.log(totalPrice);
 
     const newTask = { ...data, email: user.email };
+    newTask.workers = parseInt(newTask.workers);
+    // newTask.payableAmount = parseInt(newTask.payableAmount);
     console.log(newTask);
     axiosPublic.post("/tasks", newTask).then((result) => {
       //   console.log(result.data);

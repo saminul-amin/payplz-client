@@ -33,7 +33,6 @@ export default function Register() {
           console.log(userInfo);
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              navigate("/");
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -42,6 +41,7 @@ export default function Register() {
                 timer: 1500,
               });
               reset();
+              navigate("/");
             }
           });
         })

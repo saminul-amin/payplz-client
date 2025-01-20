@@ -1,11 +1,13 @@
 import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
 
 export default function MySubmissions() {
+  const { user } = useAuth();
   const [submissions, setSubmissions] = useState([]);
   const axiosPublic = useAxiosPublic();
 
-  axiosPublic.get("/submissions").then((result) => {
+  axiosPublic.get(`/submissions/${user.email}`).then((result) => {
     setSubmissions(result.data);
   });
 
@@ -20,9 +22,9 @@ export default function MySubmissions() {
               <tr className="text-lg font-semibold">
                 <th>#</th>
                 <th>Task Title</th>
-                <th className="text-center">Task Details</th>
-                <th className="text-center">Buyer's Email</th>
-                <th className="text-center">Submission Details</th>
+                <th>Task Details</th>
+                <th>Buyer's Email</th>
+                <th>Submission Details</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -34,10 +36,8 @@ export default function MySubmissions() {
                   <td>{submission.title}</td>
                   <td>{submission.details}</td>
                   <td>{submission.email}</td>
-                  <td>
-                    {submission.submissionDetails}
-                  </td>
-                  <td className="text-center">{submission.status}</td>
+                  <td>{submission.submissionDetails}</td>
+                  <td>{submission.status}</td>
                 </tr>
               ))}
             </tbody>
