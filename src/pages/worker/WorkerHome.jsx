@@ -40,9 +40,8 @@ export default function WorkerHome() {
                 <tr className="text-lg font-semibold">
                   <th>#</th>
                   <th>Task Title</th>
-                  <th>Task Details</th>
+                  <th className="text-center">Payable Amount</th>
                   <th>Buyer's Email</th>
-                  <th>Submission Details</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -52,9 +51,8 @@ export default function WorkerHome() {
                   <tr key={idx}>
                     <th>{idx + 1}</th>
                     <td>{submission.title}</td>
-                    <td>{submission.details}</td>
+                    <td className="text-center">{submission.payableAmount}</td>
                     <td>{submission.email}</td>
-                    <td>{submission.submissionDetails}</td>
                     <td>{submission.status}</td>
                   </tr>
                 ))}

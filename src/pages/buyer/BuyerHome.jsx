@@ -1,16 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 export default function BuyerHome() {
   const { user } = useAuth();
-  const [submissions, setSubmissions] = useState([]);
   const [totalTask, setTotalTask] = useState(0);
   const [pendingTask, setPendingTask] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState([]);
   const axiosPublic = useAxiosPublic();
+  const { data: taskCount = [], isLoading } = useQuery({
+    queryKey: ["taskCount"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/tasks/worker");
+      return res.data;
+    },
+  });
+  const { data: submissions = [], isLoading: isSubmissionsLoading } = useQuery({
+    queryKey: ["submissions", user.email],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/submissions/buyer/${user.email}`);
+      return res.data;
+    },
+    enabled: !!user.email,
+  });
+  // console.log(user.email, submissions);
+  const pendingSubmissions = submissions.filter(
+    (submission) => submission.status === "pending"
+  );
+
+  useEffect(() => {
+    if (taskCount?.totalTask !== undefined) {
+      setTotalTask(taskCount.totalTask);
+    }
+    if (taskCount?.pendingTask !== undefined) {
+      setPendingTask(taskCount.pendingTask);
+    }
+  }, [taskCount]);
+
+  if (isLoading || isSubmissionsLoading) {
+    return <p>Loading...</p>;
+  }
 
   const openModal = (data) => {
     setIsModalOpen(true);
@@ -18,14 +50,14 @@ export default function BuyerHome() {
   };
   const closeModal = () => setIsModalOpen(false);
 
-  axiosPublic.get("/tasks/worker").then((result) => {
-    setTotalTask(result.data.totalTask);
-    setPendingTask(result.data.pendingTask);
-  });
+  // axiosPublic.get("/tasks/worker").then((result) => {
+  //   setTotalTask(result.data.totalTask);
+  //   setPendingTask(result.data.pendingTask);
+  // });
 
-  axiosPublic.get(`/submissions/buyer/${user.email}`).then((res) => {
-    setSubmissions(res.data);
-  });
+  // axiosPublic.get(`/submissions/buyer/${user.email}`).then((res) => {
+  //   setSubmissions(res.data);
+  // });
   // console.log(submissions);
 
   const handleApproved = (id) => {
@@ -91,7 +123,7 @@ export default function BuyerHome() {
               </thead>
               <tbody>
                 {/* row 1 */}
-                {submissions.map((submission, idx) => (
+                {pendingSubmissions.map((submission, idx) => (
                   <tr key={idx}>
                     <th>{idx + 1}</th>
                     <td>{submission.name}</td>
@@ -142,7 +174,8 @@ export default function BuyerHome() {
               <p>{modalInfo.submissionDetails}</p>
               <h2 className="text-lg font-semibold mt-4">Worker Information</h2>
               <p>
-                <span className="font-semibold">Name: </span>{modalInfo.name}
+                <span className="font-semibold">Name: </span>
+                {modalInfo.name}
               </p>
               <p>
                 <span className="font-semibold">Email: </span>
