@@ -18,7 +18,11 @@ export default function BuyerHome() {
       return res.data;
     },
   });
-  const { data: submissions = [], isLoading: isSubmissionsLoading } = useQuery({
+  const {
+    data: submissions = [],
+    isLoading: isSubmissionsLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["submissions", user.email],
     queryFn: async () => {
       const res = await axiosPublic.get(`/submissions/buyer/${user.email}`);
@@ -26,7 +30,8 @@ export default function BuyerHome() {
     },
     enabled: !!user.email,
   });
-  // console.log(user.email, submissions);
+  
+  
   const pendingSubmissions = submissions.filter(
     (submission) => submission.status === "pending"
   );
@@ -48,7 +53,10 @@ export default function BuyerHome() {
     setIsModalOpen(true);
     setModalInfo(data);
   };
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalInfo([]);
+  };
 
   // axiosPublic.get("/tasks/worker").then((result) => {
   //   setTotalTask(result.data.totalTask);
@@ -60,7 +68,8 @@ export default function BuyerHome() {
   // });
   // console.log(submissions);
 
-  const handleApproved = (id) => {
+  const handleApproved = (id, workerEmail, coinAmount) => {
+    handleWorkerCoinIncrease(workerEmail, coinAmount);
     Swal.fire({
       title: "Do you really want to approve the submission?",
       showDenyButton: true,
@@ -73,13 +82,14 @@ export default function BuyerHome() {
         axiosPublic.patch(`/submissions/approved/${id}`).then((result) => {
           console.log(result.data);
         });
+        refetch();
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
   };
 
-  const handleRejected = (id) => {
+  const handleRejected = (id, taskId) => {
     Swal.fire({
       title: "Do you really want to reject the submission?",
       showDenyButton: true,
@@ -92,11 +102,23 @@ export default function BuyerHome() {
         axiosPublic.patch(`/submissions/rejected/${id}`).then((result) => {
           console.log(result.data);
         });
+        axiosPublic.post(`/tasks/increase-worker/${taskId}`).then((result) => {
+          console.log(result.data);
+        });
+        refetch();
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
       }
     });
   };
+
+  const handleWorkerCoinIncrease = async (workerEmail, coin) => {
+    const res = await axiosPublic.post("/update-coin", {
+      email: workerEmail,
+      coin: parseInt(coin),
+    });
+    console.log(res);
+  }
 
   return (
     <div>
@@ -141,7 +163,11 @@ export default function BuyerHome() {
                       <div className="join join-vertical">
                         <button
                           onClick={() => {
-                            handleApproved(submission._id);
+                            handleApproved(
+                              submission._id,
+                              submission.workerEmail,
+                              submission.payableAmount,
+                            );
                           }}
                           className="btn join-item bg-base-300"
                         >
@@ -149,7 +175,7 @@ export default function BuyerHome() {
                         </button>
                         <button
                           onClick={() => {
-                            handleRejected(submission._id);
+                            handleRejected(submission._id, submission.taskId);
                           }}
                           className="btn join-item bg-base-300"
                         >

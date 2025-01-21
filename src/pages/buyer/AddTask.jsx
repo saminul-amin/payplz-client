@@ -4,27 +4,51 @@ import Swal from "sweetalert2";
 
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function AddTask() {
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/users");
+      return res.data;
+    },
+  });
+  if (isLoading) return <p>Loading...</p>;
+
+  const userEmail = user.email;
+  const currentUser = users.filter((usr) => usr.email === userEmail)[0];
 
   const onSubmit = (data) => {
     // console.log(data);
     const reqWorkers = parseInt(data.workers);
     const amountEach = parseFloat(data.payableAmount);
     const totalPrice = reqWorkers * amountEach;
-    console.log(totalPrice);
+    console.log(totalPrice, currentUser.coin);
+
+    if (totalPrice > currentUser.coin) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You Don't have enough Coin to Add! Please Purchase Coin First",
+      }); 
+      navigate("/dashboard/purchase-coin");
+      return ;
+    }
 
     const newTask = { ...data, email: user.email };
     newTask.workers = parseInt(newTask.workers);
-    // newTask.payableAmount = parseInt(newTask.payableAmount);
+    newTask.payableAmount = parseInt(newTask.payableAmount);
     console.log(newTask);
     axiosPublic.post("/tasks", newTask).then((result) => {
       //   console.log(result.data);

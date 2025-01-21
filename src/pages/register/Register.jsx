@@ -22,6 +22,10 @@ export default function Register() {
     createUser(data.email, data.password).then((result) => {
       const user = result.user;
       console.log(user);
+      let coin = 10;
+      if (data.role === "buyer") {
+        coin += 40;
+      }
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
           const userInfo = {
@@ -29,6 +33,7 @@ export default function Register() {
             email: data.email,
             photo: data.photoURL,
             role: data.role,
+            coin: parseInt(coin),
           };
           console.log(userInfo);
           axiosPublic.post("/users", userInfo).then((res) => {
