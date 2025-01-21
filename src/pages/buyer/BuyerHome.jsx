@@ -69,7 +69,7 @@ export default function BuyerHome() {
   // console.log(submissions);
 
   const handleApproved = (id, workerEmail, coinAmount) => {
-    handleWorkerCoinIncrease(workerEmail, coinAmount);
+    handleUpdateCoin(workerEmail, coinAmount);
     Swal.fire({
       title: "Do you really want to approve the submission?",
       showDenyButton: true,
@@ -112,7 +112,7 @@ export default function BuyerHome() {
     });
   };
 
-  const handleWorkerCoinIncrease = async (workerEmail, coin) => {
+  const handleUpdateCoin = async (workerEmail, coin) => {
     const res = await axiosPublic.post("/update-coin", {
       email: workerEmail,
       coin: parseInt(coin),

@@ -54,6 +54,7 @@ export default function AddTask() {
       //   console.log(result.data);
       if (result.data.insertedId) {
         reset();
+        handleUpdateCoin(user.email, totalPrice);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -64,6 +65,14 @@ export default function AddTask() {
       }
     });
   };
+
+  const handleUpdateCoin = async (email, coin) => {
+    const res = await axiosPublic.post("/update-coin", {
+      email: email,
+      coin: parseInt(coin * (-1)),
+    });
+    console.log(res);
+  }
 
   return (
     <div>
