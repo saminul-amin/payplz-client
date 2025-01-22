@@ -22,6 +22,7 @@ import PaymentHistory from "../pages/buyer/PaymentHistory";
 import UpdateTask from "../pages/buyer/UpdateTask";
 import TaskDetails from "../pages/worker/TaskDetails";
 import Profile from "../pages/shared/Profile";
+import Payment from "../pages/payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,11 @@ const router = createBrowserRouter([
       {
         path: "payment-history",
         element: <PaymentHistory />,
+      },
+
+      {
+        path: "payment",
+        element: <Payment />,
       },
     ],
   },

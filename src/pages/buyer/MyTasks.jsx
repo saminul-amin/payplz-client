@@ -5,17 +5,35 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MyTasks() {
   const { user } = useAuth();
-  const [tasks, setTasks] = useState([]);
+//   const [tasks, setTasks] = useState([]);
   const axiosPublic = useAxiosPublic();
-
-  axiosPublic.get(`/tasks/${user.email}`).then((res) => {
-    setTasks(res.data);
+  const { data: tasks = [], isLoading, refetch } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/tasks/${user.email}`);
+      return res.data;
+    },
   });
+  if (isLoading) return <p>Loading...</p>;
+//   const userEmail = user.email;
+//   const currentUser = users.filter((usr) => usr.email === userEmail)[0];
+  // console.log(currentUser);
 
-  const handleDeleteTask = (id) => {
+//   axiosPublic.get(`/tasks/${user.email}`).then((res) => {
+//     setTasks(res.data);
+//   });
+console.log(tasks);
+
+  const handleDeleteTask = (task) => {
+    const reqWorkers = parseInt(task.workers);
+    const amountEach = parseFloat(task.payableAmount);
+    const totalPrice = reqWorkers * amountEach;
+    // console.log(totalPrice);
+
     Swal.fire({
       title: "Do you really want to delete it?",
       showDenyButton: true,
@@ -24,9 +42,10 @@ export default function MyTasks() {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/tasks/${id}`).then((result) => {
-          // console.log(result.data.deletedCount);
+        axiosPublic.delete(`/tasks/${task._id}`).then((result) => {
+        //   console.log(result.data.deletedCount);
           if (result.data.deletedCount > 0) {
+            handleUpdateCoin(user.email, totalPrice);
             Swal.fire({
               position: "center",
               icon: "success",
@@ -34,6 +53,7 @@ export default function MyTasks() {
               showConfirmButton: false,
               timer: 1500,
             });
+            refetch();
           }
         });
       } else if (result.isDenied) {
@@ -41,6 +61,14 @@ export default function MyTasks() {
       }
     });
   };
+
+  const handleUpdateCoin = async (email, coin) => {
+    const res = await axiosPublic.post("/update-coin", {
+      email: email,
+      coin: parseInt(coin),
+    });
+    console.log(res);
+  }
 
   return (
     <div>
@@ -76,7 +104,7 @@ export default function MyTasks() {
                         </button>
                       </Link>
                       <button
-                        onClick={() => handleDeleteTask(task._id)}
+                        onClick={() => handleDeleteTask(task)}
                         className="btn join-item text-xl bg-base-300"
                       >
                         <MdDelete />

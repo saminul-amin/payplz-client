@@ -13,7 +13,9 @@ export default function TaskList() {
 
   return (
     <div>
-      <Helmet><title>Task List | PayPlz</title></Helmet>
+      <Helmet>
+        <title>Task List | PayPlz</title>
+      </Helmet>
       <h2 className="text-3xl font-semibold">Task List</h2>
       <div className="mt-6">
         <div className="overflow-x-auto w-full">
