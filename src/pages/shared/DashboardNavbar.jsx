@@ -35,9 +35,11 @@ export default function AdminNavbar() {
         </div>
         <div className="navbar-end">
           <div className="flex flex-row gap-6 items-center">
-            <p className="text-lg border-2 px-3 py-2 rounded-lg bg-base-300">
-              Coin: {currentUser.coin}
-            </p>
+            {currentUser.role !== "admin" && (
+              <p className="text-lg border-2 px-3 py-2 rounded-lg bg-base-300">
+                Coin: {currentUser.coin}
+              </p>
+            )}
             <p className="text-lg">
               {user.displayName}
               <span className="text-base"> ({currentUser.role})</span>
