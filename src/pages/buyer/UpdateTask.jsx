@@ -1,12 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function UpdateTask() {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const navigate = useNavigate();
   const {
@@ -16,12 +15,10 @@ export default function UpdateTask() {
     formState: { errors },
   } = useForm();
   const task = location.state.task;
-  // console.log(task);
 
   const onSubmit = (data) => {
-    // console.log(data);
     const newTask = data;
-    axiosPublic.patch(`/tasks/${task._id}`, newTask).then((result) => {
+    axiosSecure.patch(`/tasks/${task._id}`, newTask).then((result) => {
       console.log(result.data);
       if (result.data.modifiedCount) {
         reset();

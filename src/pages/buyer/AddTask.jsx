@@ -1,15 +1,14 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 export default function AddTask() {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
@@ -20,7 +19,7 @@ export default function AddTask() {
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users");
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
@@ -50,7 +49,7 @@ export default function AddTask() {
     newTask.workers = parseInt(newTask.workers);
     newTask.payableAmount = parseInt(newTask.payableAmount);
     console.log(newTask);
-    axiosPublic.post("/tasks", newTask).then((result) => {
+    axiosSecure.post("/tasks", newTask).then((result) => {
       //   console.log(result.data);
       if (result.data.insertedId) {
         reset();
@@ -67,7 +66,7 @@ export default function AddTask() {
   };
 
   const handleUpdateCoin = async (email, coin) => {
-    const res = await axiosPublic.post("/update-coin", {
+    const res = await axiosSecure.post("/update-coin", {
       email: email,
       coin: parseInt(coin * (-1)),
     });

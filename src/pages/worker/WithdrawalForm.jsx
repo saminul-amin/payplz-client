@@ -1,40 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function WithdrawalForm() {
   const { user } = useAuth();
   const [withdrawAmount, setWithdrawAmount] = useState(0);
   // const withdrawAmountRef = useRef();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/users");
-      return res.data;
-    },
-  });
-  if (isLoading) return <p>Loading...</p>;
-  const userEmail = user.email;
-  const currentUser = users.filter((usr) => usr.email === userEmail)[0];
-  // console.log(currentUser);
 
   const onSubmit = (data) => {
-    console.log(data);
-    const coin = parseInt(data.coinToWithdraw);
-    // setWithdrawAmount(parseFloat(coin / 20));
     const newWithdrawal = {
       email: user.email,
       name: user.displayName,
@@ -45,7 +29,7 @@ export default function WithdrawalForm() {
       status: "pending",
     };
     // console.log(newWithdrawal);
-    axiosPublic.post("/withdrawals", newWithdrawal).then((result) => {
+    axiosSecure.post("/withdrawals", newWithdrawal).then((result) => {
       console.log(result.data);
       if (result.data.insertedId) {
         Swal.fire({

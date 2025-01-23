@@ -1,13 +1,13 @@
 import { useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  axiosPublic.get("/tasks").then((res) => {
+  axiosSecure.get("/tasks").then((res) => {
     setTasks(res.data);
   });
 

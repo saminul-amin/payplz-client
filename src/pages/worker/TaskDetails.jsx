@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
 export default function TaskDetails() {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const navigate = useNavigate();
   const {
@@ -31,7 +31,7 @@ export default function TaskDetails() {
     };
     const { _id, ...submissionDetails } = details;
     // console.log(submissionDetails);
-    axiosPublic.post("/submissions", submissionDetails).then((result) => {
+    axiosSecure.post("/submissions", submissionDetails).then((result) => {
       //   console.log(result.data);
       if (result.data.insertedId) {
         reset();
@@ -42,7 +42,7 @@ export default function TaskDetails() {
           showConfirmButton: false,
           timer: 1500,
         });
-        axiosPublic
+        axiosSecure
           .post(`/tasks/decrease-worker/${submissionDetails.taskId}`)
           .then((result) => {
             console.log(result.data);

@@ -1,7 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import moment from "moment";
 import { Link, useLocation } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export default function CheckoutForm() {
   const [clientSecret, setClientSecret] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const stripe = useStripe();
   const elements = useElements();
   const location = useLocation();
@@ -20,14 +20,14 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     if (coin > 0) {
-      axiosPublic
+      axiosSecure
         .post("/create-payment-intent", { price: coin })
         .then((res) => {
           console.log(res.data.clientSecret);
           setClientSecret(res.data.clientSecret);
         });
     }
-  }, [axiosPublic, coin]);
+  }, [axiosSecure, coin]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ export default function CheckoutForm() {
         };
         console.log(payment);
 
-        const res = await axiosPublic.post("/payments", payment);
+        const res = await axiosSecure.post("/payments", payment);
         console.log("payment saved", res.data);
         if (res.data?.paymentResult?.insertedId) {
           Swal.fire({

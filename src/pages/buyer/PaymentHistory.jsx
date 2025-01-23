@@ -1,21 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function PaymentHistory() {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users");
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
   const { data: payments = [], isLoading: isPaymentLoading } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/payments");
+      const res = await axiosSecure.get("/payments");
       return res.data;
     },
   });
@@ -27,6 +27,9 @@ export default function PaymentHistory() {
 
   return (
     <div>
+      <Helmet>
+        <title>Payment History | PayPlz</title>
+      </Helmet>
       <h2 className="text-3xl font-semibold">Payment History</h2>
       <div className="mt-6">
         <div className="overflow-x-auto w-full">

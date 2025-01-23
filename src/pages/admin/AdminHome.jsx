@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 export default function AdminHome() {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: withdrawals = [], isLoading } = useQuery({
     queryKey: ["withdrawals"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/withdrawals");
+      const res = await axiosSecure.get("/withdrawals");
       return res.data;
     },
   });
   const { data: users = [], isLoading: isUsersLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users");
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
@@ -35,7 +36,7 @@ export default function AdminHome() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Withdrawal Approved!", "", "success");
-        axiosPublic
+        axiosSecure
           .patch(`/withdrawals/approved/${withdrawal._id}`)
           .then((result) => {
             console.log(result.data);
@@ -49,15 +50,18 @@ export default function AdminHome() {
   };
 
   const handleUpdateCoin = async (workerEmail, coin) => {
-    const res = await axiosPublic.post("/update-coin", {
+    const res = await axiosSecure.post("/update-coin", {
       email: workerEmail,
-      coin: parseInt(coin),
+      coin: parseInt(coin * -1),
     });
     console.log(res);
   };
 
   return (
     <div>
+      <Helmet>
+        <title>Admin Home | PayPlz</title>
+      </Helmet>
       <div className="flex flex-col md:flex-row justify-between font-semibold text-lg xl:text-2xl">
         <p>Total Worker: 0</p>
         <p>Total Buyer: 0</p>

@@ -1,23 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 export default function PurchaseCoin() {
-  const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   const handleUpdateCoin = async (coin) => {
     navigate("/dashboard/payment", { state: { coin: coin } });
-    // const res = await axiosPublic.post("/update-coin", {
-    //   email: user.email,
-    //   coin: parseInt(coin),
-    // });
-    // console.log(res);
   };
 
   return (
     <div>
+      <Helmet>
+        <title>Purchase Coin | PayPlz</title>
+      </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
         {/* <!-- Card 1 --> */}
         <div

@@ -1,15 +1,30 @@
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 export default function ManageTasks() {
-  const [tasks, setTasks] = useState([]);
-  const axiosPublic = useAxiosPublic();
-
-  axiosPublic.get("/tasks").then((res) => {
-    setTasks(res.data);
+  // const [tasks, setTasks] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const {
+    data: tasks = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/tasks");
+      return res.data;
+    },
   });
+  if (isLoading) return <p>Loading...</p>;
+  console.log(tasks);
+
+  // axiosSecure.get("/tasks").then((res) => {
+  //   setTasks(res.data);
+  // });
 
   const handleDeleteTask = (id) => {
     Swal.fire({
@@ -20,7 +35,7 @@ export default function ManageTasks() {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/tasks/${id}`).then((result) => {
+        axiosSecure.delete(`/tasks/${id}`).then((result) => {
           if (result.data.deletedCount > 0) {
             Swal.fire({
               position: "center",
@@ -29,6 +44,7 @@ export default function ManageTasks() {
               showConfirmButton: false,
               timer: 1500,
             });
+            refetch();
           }
         });
       } else if (result.isDenied) {
@@ -39,6 +55,9 @@ export default function ManageTasks() {
 
   return (
     <div>
+      <Helmet>
+        <title>Manage Tasks | PayPlz</title>
+      </Helmet>
       <h2 className="text-3xl font-semibold">Manage Tasks</h2>
       <div className="mt-6">
         <div className="overflow-x-auto w-full">

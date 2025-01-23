@@ -1,6 +1,7 @@
 import { useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 export default function WorkerHome() {
   const { user } = useAuth();
@@ -8,15 +9,15 @@ export default function WorkerHome() {
   const [pendingSubmission, setPendingSubmission] = useState(0);
   const [totalEarning, setTotalEarning] = useState(0);
   const [submissions, setSubmissions] = useState([]);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  axiosPublic.get("/submission/total-number").then((result) => {
+  axiosSecure.get("/submission/total-number").then((result) => {
     setTotalSubmission(result.data.totalSubmission);
     setPendingSubmission(result.data.pendingSubmission);
     setTotalEarning(result.data.totalEarning);
   });
 
-  axiosPublic.get(`/submissions/${user.email}`).then((result) => {
+  axiosSecure.get(`/submissions/${user.email}`).then((result) => {
     setSubmissions(result.data);
   });
   const approvedSubmissions = submissions.filter(
@@ -25,6 +26,9 @@ export default function WorkerHome() {
 
   return (
     <div>
+      <Helmet>
+        <title>Worker Home | PayPlz</title>
+      </Helmet>
       <div className="flex flex-col md:flex-row justify-between font-semibold text-lg xl:text-2xl">
         <p>Total Submission: {totalSubmission}</p>
         <p>Pending Submission: {pendingSubmission}</p>

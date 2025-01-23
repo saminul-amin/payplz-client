@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 export default function BuyerHome() {
   const { user } = useAuth();
@@ -10,11 +11,11 @@ export default function BuyerHome() {
   const [pendingTask, setPendingTask] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState([]);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: taskCount = [], isLoading } = useQuery({
     queryKey: ["taskCount"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/tasks/worker");
+      const res = await axiosSecure.get("/tasks/worker");
       return res.data;
     },
   });
@@ -25,13 +26,12 @@ export default function BuyerHome() {
   } = useQuery({
     queryKey: ["submissions", user.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/submissions/buyer/${user.email}`);
+      const res = await axiosSecure.get(`/submissions/buyer/${user.email}`);
       return res.data;
     },
     enabled: !!user.email,
   });
-  
-  
+
   const pendingSubmissions = submissions.filter(
     (submission) => submission.status === "pending"
   );
@@ -58,12 +58,12 @@ export default function BuyerHome() {
     setModalInfo([]);
   };
 
-  // axiosPublic.get("/tasks/worker").then((result) => {
+  // axiosSecure.get("/tasks/worker").then((result) => {
   //   setTotalTask(result.data.totalTask);
   //   setPendingTask(result.data.pendingTask);
   // });
 
-  // axiosPublic.get(`/submissions/buyer/${user.email}`).then((res) => {
+  // axiosSecure.get(`/submissions/buyer/${user.email}`).then((res) => {
   //   setSubmissions(res.data);
   // });
   // console.log(submissions);
@@ -79,7 +79,7 @@ export default function BuyerHome() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Submission Approved!", "", "success");
-        axiosPublic.patch(`/submissions/approved/${id}`).then((result) => {
+        axiosSecure.patch(`/submissions/approved/${id}`).then((result) => {
           console.log(result.data);
         });
         refetch();
@@ -99,10 +99,10 @@ export default function BuyerHome() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Submission Rejected!", "", "success");
-        axiosPublic.patch(`/submissions/rejected/${id}`).then((result) => {
+        axiosSecure.patch(`/submissions/rejected/${id}`).then((result) => {
           console.log(result.data);
         });
-        axiosPublic.post(`/tasks/increase-worker/${taskId}`).then((result) => {
+        axiosSecure.post(`/tasks/increase-worker/${taskId}`).then((result) => {
           console.log(result.data);
         });
         refetch();
@@ -113,15 +113,18 @@ export default function BuyerHome() {
   };
 
   const handleUpdateCoin = async (workerEmail, coin) => {
-    const res = await axiosPublic.post("/update-coin", {
+    const res = await axiosSecure.post("/update-coin", {
       email: workerEmail,
       coin: parseInt(coin),
     });
     console.log(res);
-  }
+  };
 
   return (
     <div>
+      <Helmet>
+        <title>Buyer Home | PayPlz</title>
+      </Helmet>
       <div className="flex flex-col md:flex-row justify-between font-semibold text-lg xl:text-2xl">
         <p>Total Task: {totalTask}</p>
         <p>Pending Task: {pendingTask}</p>
@@ -166,7 +169,7 @@ export default function BuyerHome() {
                             handleApproved(
                               submission._id,
                               submission.workerEmail,
-                              submission.payableAmount,
+                              submission.payableAmount
                             );
                           }}
                           className="btn join-item bg-base-300"

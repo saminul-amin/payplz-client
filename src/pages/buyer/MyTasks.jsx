@@ -1,32 +1,37 @@
 import { useState } from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 export default function MyTasks() {
   const { user } = useAuth();
-//   const [tasks, setTasks] = useState([]);
-  const axiosPublic = useAxiosPublic();
-  const { data: tasks = [], isLoading, refetch } = useQuery({
+  //   const [tasks, setTasks] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const {
+    data: tasks = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/tasks/${user.email}`);
+      const res = await axiosSecure.get(`/tasks/${user.email}`);
       return res.data;
     },
   });
   if (isLoading) return <p>Loading...</p>;
-//   const userEmail = user.email;
-//   const currentUser = users.filter((usr) => usr.email === userEmail)[0];
+  //   const userEmail = user.email;
+  //   const currentUser = users.filter((usr) => usr.email === userEmail)[0];
   // console.log(currentUser);
 
-//   axiosPublic.get(`/tasks/${user.email}`).then((res) => {
-//     setTasks(res.data);
-//   });
-console.log(tasks);
+  //   axiosSecure.get(`/tasks/${user.email}`).then((res) => {
+  //     setTasks(res.data);
+  //   });
+  console.log(tasks);
 
   const handleDeleteTask = (task) => {
     const reqWorkers = parseInt(task.workers);
@@ -42,8 +47,8 @@ console.log(tasks);
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/tasks/${task._id}`).then((result) => {
-        //   console.log(result.data.deletedCount);
+        axiosSecure.delete(`/tasks/${task._id}`).then((result) => {
+          //   console.log(result.data.deletedCount);
           if (result.data.deletedCount > 0) {
             handleUpdateCoin(user.email, totalPrice);
             Swal.fire({
@@ -63,15 +68,18 @@ console.log(tasks);
   };
 
   const handleUpdateCoin = async (email, coin) => {
-    const res = await axiosPublic.post("/update-coin", {
+    const res = await axiosSecure.post("/update-coin", {
       email: email,
       coin: parseInt(coin),
     });
     console.log(res);
-  }
+  };
 
   return (
     <div>
+      <Helmet>
+        <title>My Tasks | PayPlz</title>
+      </Helmet>
       <h2 className="text-3xl font-semibold">My Tasks</h2>
       <div className="mt-6">
         <div className="overflow-x-auto w-full">

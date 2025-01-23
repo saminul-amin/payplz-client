@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 export default function Withdrawals() {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: withdrawals = [], isLoading } = useQuery({
     queryKey: ["withdrawals"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/withdrawals");
+      const res = await axiosSecure.get("/withdrawals");
       return res.data;
     },
   });
@@ -22,6 +23,9 @@ export default function Withdrawals() {
 
   return (
     <div>
+      <Helmet>
+        <title>Withdrawals | PayPlz</title>
+      </Helmet>
       <div className="flex flex-col md:flex-row justify-between font-semibold text-lg xl:text-2xl">
         <p>Total Earning: 0</p>
         <p>Total Withdrawal Amount: 0</p>
