@@ -6,11 +6,19 @@ import { Helmet } from "react-helmet-async";
 export default function MySubmissions() {
   const { user } = useAuth();
   const [submissions, setSubmissions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const axiosSecure = useAxiosSecure();
 
   axiosSecure.get(`/submissions/${user.email}`).then((result) => {
     setSubmissions(result.data);
   });
+
+  // Pagination Items
+  const itemsPerPage = 10;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = submissions.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(submissions.length / itemsPerPage);
 
   return (
     <div>
@@ -34,7 +42,7 @@ export default function MySubmissions() {
             </thead>
             <tbody>
               {/* row 1 */}
-              {submissions.map((submission, idx) => (
+              {currentItems.map((submission, idx) => (
                 <tr key={idx}>
                   <th>{idx + 1}</th>
                   <td>{submission.title}</td>
@@ -46,6 +54,20 @@ export default function MySubmissions() {
               ))}
             </tbody>
           </table>
+        </div>
+        {/* Pagination Controls */}
+        <div className="flex justify-center mt-4">
+          <div className="btn-group">
+            {[...Array(totalPages).keys()].map((_, idx) => (
+              <button
+                key={idx + 1}
+                className={`btn ${currentPage === idx + 1 ? "btn-active" : ""}`}
+                onClick={() => setCurrentPage(idx + 1)}
+              >
+                {idx + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

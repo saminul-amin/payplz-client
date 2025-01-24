@@ -24,6 +24,9 @@ import UpdateTask from "../pages/buyer/UpdateTask";
 import TaskDetails from "../pages/worker/TaskDetails";
 import Profile from "../pages/shared/Profile";
 import Payment from "../pages/payment/Payment";
+import AdminRoute from "./AdminRoute";
+import WorkerRoute from "./WorkerRoute";
+import BuyerRoute from "./BuyerRoute";
 
 const router = createBrowserRouter([
   {
@@ -68,70 +71,133 @@ const router = createBrowserRouter([
       // Admin Routes
       {
         path: "admin-home",
-        element: <AdminHome />,
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-tasks",
-        element: <ManageTasks />,
+        element: (
+          <AdminRoute>
+            <ManageTasks />
+          </AdminRoute>
+        ),
       },
       // Worker Routes
       {
         path: "worker-home",
-        element: <WorkerHome />,
+        element: (
+          <WorkerRoute>
+            <WorkerHome />
+          </WorkerRoute>
+        ),
       },
       {
         path: "my-submissions",
-        element: <MySubmissions />,
+        element: (
+          <WorkerRoute>
+            <MySubmissions />
+          </WorkerRoute>
+        ),
       },
       {
         path: "withdrawals",
-        element: <Withdrawals />,
+        element: (
+          <WorkerRoute>
+            <Withdrawals />
+          </WorkerRoute>
+        ),
       },
       {
         path: "withdrawal-form",
-        element: <WithdrawalForm />,
+        element: (
+          <WorkerRoute>
+            <WithdrawalForm />
+          </WorkerRoute>
+        ),
       },
       {
         path: "task-list",
-        element: <TaskList />,
+        element: (
+          <WorkerRoute>
+            <TaskList />
+          </WorkerRoute>
+        ),
       },
       {
         path: "task-details",
-        element: <TaskDetails />,
+        element: (
+          <WorkerRoute>
+            <TaskDetails />
+          </WorkerRoute>
+        ),
       },
       // Buyer Routes
       {
         path: "buyer-home",
-        element: <BuyerHome />,
+        element: (
+          <BuyerRoute>
+            <BuyerHome />
+          </BuyerRoute>
+        ),
       },
       {
         path: "add-task",
-        element: <AddTask />,
+        element: (
+          <BuyerRoute>
+            <AddTask />
+          </BuyerRoute>
+        ),
       },
       {
         path: "my-tasks",
-        element: <MyTasks />,
+        element: (
+          <BuyerRoute>
+            <MyTasks />
+          </BuyerRoute>
+        ),
       },
       {
         path: "update-task",
-        element: <UpdateTask />,
+        element: (
+          <BuyerRoute>
+            <UpdateTask />
+          </BuyerRoute>
+        ),
       },
       {
         path: "purchase-coin",
-        element: <PurchaseCoin />,
+        element: (
+          <BuyerRoute>
+            <PurchaseCoin />
+          </BuyerRoute>
+        ),
       },
       {
         path: "payment-history",
-        element: <PaymentHistory />,
+        element: (
+          <BuyerRoute>
+            <PaymentHistory />
+          </BuyerRoute>
+        ),
       },
-
       {
         path: "payment",
-        element: <Payment />,
+        element: (
+          <BuyerRoute>
+            <Payment />
+          </BuyerRoute>
+        ),
       },
     ],
   },

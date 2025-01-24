@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 export default function Login() {
-  const { user, userGoogleSignIn, userSignIn } = useAuth();
+  const { userGoogleSignIn, userSignIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     console.log(data);
@@ -27,7 +29,7 @@ export default function Login() {
         timer: 1500,
       });
       reset();
-      navigate("/");
+      navigate(from, { replace: true });
     });
   };
 

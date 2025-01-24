@@ -6,6 +6,9 @@ import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
 export default function Register() {
   const { createUser, updateUserProfile, userGoogleSignIn } = useAuth();
   const axiosPublic = useAxiosPublic();
@@ -17,8 +20,19 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // console.log(data);
+    const imageFile = { image: data.image[0] };
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    let photo;
+    if (res.data.success) {
+      photo = res.data.data.display_url;
+    }
+    // console.log(photo);
     createUser(data.email, data.password).then((result) => {
       const user = result.user;
       console.log(user);
@@ -26,12 +40,12 @@ export default function Register() {
       if (data.role === "buyer") {
         coin += 40;
       }
-      updateUserProfile(data.name, data.photoURL)
+      updateUserProfile(data.name, photo)
         .then(() => {
           const userInfo = {
             name: data.name,
             email: data.email,
-            photo: data.photoURL,
+            photo: photo,
             role: data.role,
             coin: parseInt(coin),
           };
@@ -100,7 +114,7 @@ export default function Register() {
                 <span className="text-red-500">Name is required</span>
               )}
             </div>
-            <div className="form-control">
+            {/* <div className="form-control">
               <label className="label">
                 <span className="label-text">Photo URL</span>
               </label>
@@ -113,7 +127,7 @@ export default function Register() {
               {errors.photoURL && (
                 <span className="text-red-500">Photo URL is required</span>
               )}
-            </div>
+            </div> */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -164,7 +178,7 @@ export default function Register() {
                 </span>
               )}
             </div>
-            <div>
+            <div className="form-control">
               <label className="label">
                 <span className="label-text">Role</span>
               </label>
@@ -179,6 +193,19 @@ export default function Register() {
                 <option value="worker">Worker</option>
                 <option value="buyer">Buyer</option>
               </select>
+              {errors.role && (
+                <span className="text-red-500">Role is required</span>
+              )}
+            </div>
+            <div className="form-control w-full mb-6">
+              <label className="label">
+                <span className="label-text">Photo</span>
+              </label>
+              <input
+                {...register("image", { required: true })}
+                type="file"
+                className="file-input w-full"
+              />
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-neutral font-semibold text-lg text-white rounded-md">
