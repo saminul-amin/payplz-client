@@ -15,7 +15,7 @@ export default function UserDashboard() {
           {displayName} <span className="text-base font-normal">({role})</span>
         </h2>
         <p className="italic text-lg">{email}</p>
-        <Link to="profile">
+        <Link to="/profile">
           <button className="btn">Go To Profile</button>
         </Link>
       </div>

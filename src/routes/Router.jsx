@@ -46,6 +46,14 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -63,10 +71,6 @@ const router = createBrowserRouter([
             <UserDashboard />
           </PrivateRoute>
         ),
-      },
-      {
-        path: "profile",
-        element: <Profile />,
       },
       // Admin Routes
       {
