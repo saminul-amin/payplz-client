@@ -40,6 +40,7 @@ export default function Register() {
       if (data.role === "buyer") {
         coin += 40;
       }
+      let role = 
       updateUserProfile(data.name, photo)
         .then(() => {
           const userInfo = {
@@ -93,7 +94,7 @@ export default function Register() {
       <Helmet>
         <title>Register | PayPlz</title>
       </Helmet>
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="mt-8 min-h-screen flex justify-center items-center">
         <div className="card bg-base-200 w-full max-w-lg shrink-0 rounded-2xl py-10 pt-10 pb-4">
           <h2 className="text-2xl font-semibold text-center">
             Create Your Account
@@ -114,20 +115,6 @@ export default function Register() {
                 <span className="text-red-500">Name is required</span>
               )}
             </div>
-            {/* <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo URL</span>
-              </label>
-              <input
-                type="text"
-                {...register("photoURL", { required: true })}
-                placeholder="Photo URL"
-                className="input input-bordered"
-              />
-              {errors.photoURL && (
-                <span className="text-red-500">Photo URL is required</span>
-              )}
-            </div> */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -185,9 +172,9 @@ export default function Register() {
               <select
                 className="select select-bordered w-full"
                 {...register("role", { required: true })}
-                defaultValue="Admin"
+                defaultValue="admin"
               >
-                <option disabled value="Admin">
+                <option disabled value="admin">
                   What's Your Role
                 </option>
                 <option value="worker">Worker</option>

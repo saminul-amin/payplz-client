@@ -7,14 +7,12 @@ export default function WorkerHome() {
   const { user } = useAuth();
   const [totalSubmission, setTotalSubmission] = useState(0);
   const [pendingSubmission, setPendingSubmission] = useState(0);
-  const [totalEarning, setTotalEarning] = useState(0);
   const [submissions, setSubmissions] = useState([]);
   const axiosSecure = useAxiosSecure();
 
   axiosSecure.get("/submission/total-number").then((result) => {
     setTotalSubmission(result.data.totalSubmission);
     setPendingSubmission(result.data.pendingSubmission);
-    setTotalEarning(result.data.totalEarning);
   });
 
   axiosSecure.get(`/submissions/${user.email}`).then((result) => {
@@ -23,6 +21,10 @@ export default function WorkerHome() {
   const approvedSubmissions = submissions.filter(
     (stat) => stat.status === "approved"
   );
+  let totalEarning = 0;
+  approvedSubmissions.map((submission) => {
+    totalEarning += parseInt(submission.payableAmount);
+  });
 
   return (
     <div>

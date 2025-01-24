@@ -52,7 +52,7 @@ export default function Login() {
       <Helmet>
         <title>Login | PayPlz</title>
       </Helmet>
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="mt-8 min-h-screen flex justify-center items-center">
         <div className="card bg-base-200 w-full max-w-lg shrink-0 rounded-2xl py-10 pt-10 pb-4">
           <h2 className="text-2xl font-semibold text-center">
             Login your account

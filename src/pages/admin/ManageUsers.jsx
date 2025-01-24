@@ -1,15 +1,11 @@
-import { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useRole from "../../hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 export default function ManageUsers() {
-  const role = useRole();
   const axiosSecure = useAxiosSecure();
-  // const [users, setUsers] = useState([]);
   const {
     data: users = [],
     isLoading,
@@ -27,8 +23,16 @@ export default function ManageUsers() {
   //   setUsers(res.data);
   // });
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (user) => {
     // console.log(id);
+    if (user.role === "admin") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can't delete yourself buddy!",
+      });
+      return ;
+    }
     Swal.fire({
       title: "Do you really want to delete it?",
       showDenyButton: true,
@@ -37,7 +41,7 @@ export default function ManageUsers() {
       denyButtonText: `Don't Delete`,
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${id}`).then((result) => {
+        axiosSecure.delete(`/users/${user._id}`).then((result) => {
           // console.log(result.data.deletedCount);
           if (result.data.deletedCount > 0) {
             Swal.fire({
@@ -96,7 +100,7 @@ export default function ManageUsers() {
                   <td>{user.email}</td>
                   <td>{user.photo}</td>
                   <td>{user.role}</td>
-                  <td>{user.coin}</td>
+                  <td>{user.role !== "admin" ? user.coin : "inf"}</td>
                   <td>
                     {user.role === "admin" && (
                       <div className="join join-vertical">
@@ -149,7 +153,7 @@ export default function ManageUsers() {
                   </td>
                   <td>
                     <button
-                      onClick={() => handleDeleteUser(user._id)}
+                      onClick={() => handleDeleteUser(user)}
                       className="btn join-item text-xl bg-base-300"
                     >
                       <MdDelete />
