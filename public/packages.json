@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Starter Tasks",
+        "price": "Free",
+        "features": [
+            "Access to entry-level tasks",
+            "10 tasks/day limit",
+            "Standard payouts",
+            "Basic support"
+        ]
+    },
+    {
+        "name": "Task Pro",
+        "price": "$20/month",
+        "features": [
+            "Unlimited task submissions",
+            "Higher payout rates",
+            "Access to mid-level tasks",
+            "Priority customer support"
+        ]
+    },
+    {
+        "name": "Elite Tasker",
+        "price": "$50/month",
+        "features": [
+            "Unlimited access to all task levels",
+            "VIP customer support",
+            "Highest payout rates",
+            "Custom analytics and reports"
+        ]
+    }
+]

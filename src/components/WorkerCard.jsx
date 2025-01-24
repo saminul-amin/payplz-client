@@ -1,8 +1,8 @@
 export default function WorkerCard({ worker }) {
   const { photo, name, role, coin } = worker;
-  
+
   return (
-    <div>
+    <div className="mx-8 my-4">
       <div className="card bg-base-200 mx-auto shadow-xl pt-6">
         <figure className="mx-auto">
           <img src={photo} className="rounded-full w-24 h-24" />

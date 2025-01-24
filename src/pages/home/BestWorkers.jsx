@@ -19,8 +19,17 @@ export default function BestWorkers() {
   console.log(bestWorkers);
   return (
     <div>
-      <h2 className="text-3xl font-semibold mt-12">Best Workers</h2>
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div>
+        <h2 className="text-3xl font-semibold mt-12 text-center">
+          Best Workers
+        </h2>
+        <p className="text-center mt-4">
+          Meet our top-performing workers, leading the way
+          <br /> with the highest earnings and exceptional skills!
+        </p>
+      </div>
+      <hr className="my-4 bg-purple-950 w-9/12 md:w-6/12 mx-auto" />
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {bestWorkers.map((worker) => (
           <WorkerCard key={worker._id} worker={worker}></WorkerCard>
         ))}

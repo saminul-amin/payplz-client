@@ -1,5 +1,4 @@
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaFacebookF, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -39,10 +38,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex justify-center items-center gap-12 mt-8 text-4xl">
-        <FaFacebookF />
-        <FaXTwitter />
-        <FaYoutube />
-        <FaInstagram />
+        <a href="https://www.facebook.com/profile.php?id=100018114701775">
+          <FaFacebookF />
+        </a>
+        <a href="https://www.linkedin.com/in/md-saminul-amin-91605730a/">
+          <FaLinkedin />
+        </a>
+        <a href="https://github.com/saminul-amin">
+          <FaGithub />
+        </a>
       </div>
       <div className="footer footer-center bg-base-100 text-base-content px-4 pt-4 pb-2">
         <aside>

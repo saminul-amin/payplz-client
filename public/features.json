@@ -1,0 +1,27 @@
+[
+    {
+        "title": "Task Categories",
+        "description": "Browse and post tasks in multiple categories like writing, design, data entry, and more.",
+        "icon": "📂"
+    },
+    {
+        "title": "Secure Payments",
+        "description": "Enjoy peace of mind with our safe and reliable payment system.",
+        "icon": "💳"
+    },
+    {
+        "title": "Role-Based Dashboards",
+        "description": "Get tailored experiences for workers, buyers, and admins.",
+        "icon": "📊"
+    },
+    {
+        "title": "Advanced Features",
+        "description": "Leverage search filters, email notifications, and pagination for seamless usability.",
+        "icon": "⚙️"
+    },
+    {
+        "title": "User-Friendly Interface",
+        "description": "Experience a responsive and intuitive platform that works across devices.",
+        "icon": "📱"
+    }
+]
