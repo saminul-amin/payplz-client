@@ -1,13 +1,15 @@
 const Newsletter = () => {
-    return (
+  return (
+    <div className="mx-4 sm:mx-6 md:mx-12">
       <section className="bg-base-200 mt-24 py-12 px-6 md:px-12 rounded-2xl shadow-lg mx-auto max-w-4xl">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-2">Stay Updated with PayPlz!</h2>
           <p className="text-gray-700 mb-6 md:px-48 ">
-            Subscribe to our newsletter and never miss an update on new tasks, earnings, and platform improvements.
+            Subscribe to our newsletter and never miss an update on new tasks,
+            earnings, and platform improvements.
           </p>
         </div>
-  
+
         <form className="flex flex-col md:flex-row gap-4 items-center justify-center">
           <input
             type="email"
@@ -23,8 +25,8 @@ const Newsletter = () => {
           </button>
         </form>
       </section>
-    );
-  };
-  
-  export default Newsletter;
-  
+    </div>
+  );
+};
+
+export default Newsletter;

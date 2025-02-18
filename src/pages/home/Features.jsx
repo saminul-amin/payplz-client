@@ -10,12 +10,12 @@ export default function Features() {
   }, []);
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-24 text-center">
           Features at a Glance
         </h2>
-        <p className="text-center mt-4">
+        <p className="text-center mt-4 mx-2">
           Discover the tools and features that make PayPlz your go-to platform
           <br />
           for micro-tasks and seamless collaboration.

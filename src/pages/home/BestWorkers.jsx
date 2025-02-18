@@ -18,7 +18,7 @@ export default function BestWorkers() {
   const bestWorkers = sortedWorkers.slice(0, 6);
   console.log(bestWorkers);
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-12 text-center">
           Best Workers

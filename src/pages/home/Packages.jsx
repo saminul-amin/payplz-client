@@ -11,7 +11,7 @@ export default function Packages() {
   }, []);
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-24 text-center">Packages</h2>
         <p className="text-center mt-4">
@@ -24,7 +24,7 @@ export default function Packages() {
         {packages.map((pkg, index) => (
           <div
             key={index}
-            className="bg-white border rounded-lg shadow-lg p-6 hover:shadow-xl transition"
+            className={`bg-white border rounded-lg shadow-lg p-6 hover:shadow-xl transition ${index === 1 && "border-8 border-blue-600"}`}
           >
             <h3 className="text-2xl font-semibold text-gray-800">
               {pkg.name}{" "}
@@ -45,7 +45,7 @@ export default function Packages() {
             </ul>
             <button
               onClick={() => toast("Dummy Button! It won't work dear!")}
-              className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className={`mt-6 px-6 py-2 font-semibold rounded-lg transition ${index === 1 ? "bg-blue-600 hover:bg-blue-800 text-white" : "bg-gray-300 hover:bg-slate-400"}`}
             >
               Choose Plan
             </button>

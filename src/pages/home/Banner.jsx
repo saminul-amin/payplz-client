@@ -8,7 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function Banner() {
   return (
-    <div className="mt-12 w-2/3 mx-auto">
+    <div className="mt-24 w-2/3 mx-auto max-w-4xl">
       <Carousel autoPlay interval={5000} infiniteLoop>
         <div className="flex items-center justify-around">
           <div>

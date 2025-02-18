@@ -1,6 +1,6 @@
 export default function HowItWorks() {
   return (
-    <div>
+    <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-24 text-center">
           How It Works

@@ -48,7 +48,7 @@ export default function Navbar() {
   );
 
   return (
-    <div className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+    <div className="fixed top-0 z-10 w-full bg-base-200/80 dark:bg-gray-900/80 backdrop-blur-sm">
       <div className="navbar max-w-6xl mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
