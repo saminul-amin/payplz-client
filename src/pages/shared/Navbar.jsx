@@ -48,8 +48,8 @@ export default function Navbar() {
   );
 
   return (
-    <div>
-      <div className="navbar bg-base-200 rounded-b-xl">
+    <div className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+      <div className="navbar max-w-6xl mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -82,7 +82,7 @@ export default function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end justify-end">
           <a
             className="btn"
             href="https://github.com/saminul-amin?tab=repositories"

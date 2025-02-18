@@ -6,6 +6,8 @@ import Packages from "./Packages";
 import { ToastContainer } from "react-toastify";
 import HowItWorks from "./HowItWorks";
 import Features from "./Features";
+import Newsletter from "./Newsletter";
+import FAQ from "./FAQ";
 
 export default function Home() {
   return (
@@ -19,6 +21,8 @@ export default function Home() {
       <HowItWorks />
       <Features />
       <Testimonials />
+      <FAQ />
+      <Newsletter />
       <ToastContainer />
     </div>
   );
