@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import "./Theme.css";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { user, userLogOut } = useAuth();
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   const handleLogOut = () => {
     userLogOut().then(() => {
@@ -82,9 +94,23 @@ export default function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end justify-end">
+        <div className="navbar-end justify-end gap-4">
+          <div className="flex justify-end">
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="checkbox"
+              onChange={toggleTheme}
+              checked={theme === "dark"}
+            />
+            <label htmlFor="checkbox" className="checkbox-label">
+              <i className="fas fa-moon"></i>
+              <i className="fas fa-sun"></i>
+              <span className="ball"></span>
+            </label>
+          </div>
           <a
-            className="btn"
+            className="btn "
             href="https://github.com/saminul-amin?tab=repositories"
           >
             Join As Developer

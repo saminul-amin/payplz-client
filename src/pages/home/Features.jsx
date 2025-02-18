@@ -10,12 +10,12 @@ export default function Features() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto dark">
       <div>
         <h2 className="text-3xl font-semibold mt-24 text-center">
           Features at a Glance
         </h2>
-        <p className="text-center mt-4 mx-2">
+        <p className="text-center mt-4 mx-2 dark:text-gray-300">
           Discover the tools and features that make PayPlz your go-to platform
           <br />
           for micro-tasks and seamless collaboration.
@@ -26,13 +26,13 @@ export default function Features() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
-            <div className="text-4xl mb-4">{feature.icon}</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <div className="text-4xl mb-4 ">{feature.icon}</div>
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
               {feature.title}
             </h3>
-            <p className="text-gray-600">{feature.description}</p>
+            <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
           </div>
         ))}
       </div>
