@@ -8,7 +8,7 @@ export default function ErrorPage() {
         <title>404 Error | PayPlz</title>
       </Helmet>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white text-center p-4">
-        <h1 className="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">
+        <h1 className="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-slate-600">
           Oops!
         </h1>
 
@@ -22,7 +22,7 @@ export default function ErrorPage() {
 
         <Link
           to="/"
-          className="mt-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-xl shadow-lg hover:from-purple-600 hover:to-pink-600 transition-colors"
+          className="mt-6 px-6 py-3 bg-gray-500 hover:bg-gray-700 text-white font-semibold rounded-xl shadow-lg transition-colors"
         >
           GO TO HOMEPAGE
         </Link>

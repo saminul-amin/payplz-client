@@ -19,7 +19,6 @@ export default function Navbar() {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
-  
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -105,12 +104,12 @@ export default function Navbar() {
         </div>
         <div className="navbar-end justify-end gap-4">
           <div className="flex justify-end">
-          <input
-                type="checkbox"
-                className="checkbox"
-                id="checkbox"
-                onClick={toggleTheme}
-              />
+            <input
+              type="checkbox"
+              className="checkbox"
+              id="checkbox"
+              onClick={toggleTheme}
+            />
             <label htmlFor="checkbox" className="checkbox-label">
               <i className="fas fa-moon"></i>
               <i className="fas fa-sun"></i>
@@ -118,7 +117,7 @@ export default function Navbar() {
             </label>
           </div>
           <a
-            className="btn dark:text-white dark:bg-gray-500 dark:hover:bg-gray-700"
+            className="btn dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700"
             href="https://github.com/saminul-amin?tab=repositories"
           >
             Join As Developer
