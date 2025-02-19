@@ -41,7 +41,7 @@ const FAQ = () => {
           {faqs.map((faq, index) => (
             <div key={index} className="border-b border-gray-500 pb-3">
               <button
-                className="w-full flex justify-between items-center py-3 text-left text-lg font-medium text-gray-700 focus:outline-none"
+                className="w-full flex justify-between items-center py-3 text-left text-lg font-medium text-gray-700 dark:text-gray-100 focus:outline-none"
                 onClick={() => toggleFAQ(index)}
               >
                 {faq.question}
@@ -52,7 +52,7 @@ const FAQ = () => {
                 )}
               </button>
               {openIndex === index && (
-                <p className="text-gray-500 mt-2">{faq.answer}</p>
+                <p className="text-gray-500 dark:text-gray-300 mt-2">{faq.answer}</p>
               )}
             </div>
           ))}

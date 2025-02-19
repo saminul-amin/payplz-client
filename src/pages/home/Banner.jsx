@@ -13,7 +13,7 @@ export default function Banner() {
         <div className="flex items-center justify-around">
           <div>
             <h2 className="text-3xl font-semibold">Transform Your Ideas</h2>
-            <p>Build the Future with Innovative Solutions</p>
+            <p className="dark:text-gray-300">Build the Future with Innovative Solutions</p>
           </div>
           <div className="h-64">
             <Lottie
@@ -26,7 +26,7 @@ export default function Banner() {
         <div className="flex items-center justify-around">
           <div>
             <h2 className="text-3xl font-semibold">Seamless Experiences</h2>
-            <p>User-Centric Designs for Every Need</p>
+            <p className="dark:text-gray-300">User-Centric Designs for Every Need</p>
           </div>
           <div>
             <Lottie
@@ -39,7 +39,7 @@ export default function Banner() {
         <div className="flex items-center justify-around">
           <div>
             <h2 className="text-3xl font-semibold">Beyond Boundaries</h2>
-            <p>Empowering You with Limitless Opportunities</p>
+            <p className="dark:text-gray-300">Empowering You with Limitless Opportunities</p>
           </div>
           <div>
             <Lottie

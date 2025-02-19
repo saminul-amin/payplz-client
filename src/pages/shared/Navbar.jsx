@@ -6,16 +6,25 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const { user, userLogOut } = useAuth();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+  
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
+  console.log("theme", theme);
 
   const handleLogOut = () => {
     userLogOut().then(() => {
@@ -96,13 +105,12 @@ export default function Navbar() {
         </div>
         <div className="navbar-end justify-end gap-4">
           <div className="flex justify-end">
-            <input
-              type="checkbox"
-              className="checkbox"
-              id="checkbox"
-              onChange={toggleTheme}
-              checked={theme === "dark"}
-            />
+          <input
+                type="checkbox"
+                className="checkbox"
+                id="checkbox"
+                onClick={toggleTheme}
+              />
             <label htmlFor="checkbox" className="checkbox-label">
               <i className="fas fa-moon"></i>
               <i className="fas fa-sun"></i>
@@ -110,7 +118,7 @@ export default function Navbar() {
             </label>
           </div>
           <a
-            className="btn "
+            className="btn dark:text-white dark:bg-gray-500 dark:hover:bg-gray-700"
             href="https://github.com/saminul-amin?tab=repositories"
           >
             Join As Developer

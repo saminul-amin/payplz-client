@@ -5,7 +5,7 @@ export default function Footer() {
     <div className="mt-16 pb-4 text-center bg-base-100 rounded-t-2xl">
       <hr className="my-5 w-6/12 mx-auto" />
       <h2 className="pt-4 text-3xl font-bold">PayPlz</h2>
-      <p className="text-gray-500 mx-3 md:mx-0 my-6 font-semibold text-lg">
+      <p className="text-gray-500 dark:text-gray-400 mx-3 md:mx-0 my-6 font-semibold text-lg">
         Complete tasks, earn rewards, and empower your journey <br />
         one micro-step at a time with PayPlz
       </p>

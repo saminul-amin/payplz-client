@@ -16,14 +16,14 @@ export default function BestWorkers() {
   const workers = users.filter((user) => user.role === "worker");
   const sortedWorkers = workers.sort((a, b) => b.coin - a.coin);
   const bestWorkers = sortedWorkers.slice(0, 6);
-  console.log(bestWorkers);
+  // console.log(bestWorkers);
   return (
     <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-12 text-center">
           Best Workers
         </h2>
-        <p className="text-center mt-4">
+        <p className="text-center mt-4 dark:text-gray-300">
           Meet our top-performing workers, leading the way
           <br /> with the highest earnings and exceptional skills!
         </p>

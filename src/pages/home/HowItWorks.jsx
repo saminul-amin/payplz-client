@@ -1,6 +1,6 @@
 export default function HowItWorks() {
   return (
-    <div className="max-w-6xl mx-auto dark">
+    <div className="max-w-6xl mx-auto">
       <div>
         <h2 className="text-3xl font-semibold mt-24 text-center">
           How It Works
@@ -11,7 +11,7 @@ export default function HowItWorks() {
         </p>
       </div>
       <hr className="my-4 bg-purple-950 w-9/12 md:w-6/12 mx-auto" />
-      <div className="mt-6 max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10 px-4">
+      <div className="mt-12 max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10 px-4">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
           <div className="text-4xl text-blue-500 mb-4">📑</div>
           <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">

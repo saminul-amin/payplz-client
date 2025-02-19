@@ -13,8 +13,8 @@ export default function Testimonial({ review }) {
         </figure>
         <div className="card-body text-center">
           <h2 className="card-title mx-auto">{name}</h2>
-          <h2 className="card-title mx-auto italic text-gray-500 text-base">{role}</h2>
-          <p>{testimonial}</p>
+          <h2 className="card-title mx-auto italic text-gray-500 dark:text-gray-400 text-base">{role}</h2>
+          <p className="dark:text-gray-300">{testimonial}</p>
           <div className="card-actions justify-center">
             <Rating style={{ maxWidth: 180 }} value={rating} readOnly />
           </div>
